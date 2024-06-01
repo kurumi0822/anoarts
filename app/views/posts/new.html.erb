@@ -1,0 +1,27 @@
+<h1>Ano Arts</h1>
+<h3>新規投稿ページ</h3>
+
+<% if user_signed_in? %>
+  <%= link_to "マイページへ", user_path(current_user.id) %>
+<% end %>
+<%= link_to "新規投稿へ", new_post_path %>
+<%= link_to "作品ページ", posts_path %>
+
+<%= current_user.name %>
+<p><%= image_tag current_user.image_url, size: "250x200" if current_user.image? %></p>
+
+<%= form_for @post do |f| %>
+    <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </div>
+
+  <div class="field">
+    <%= f.label :about  %>
+    <%= f.text_area :about, :size => "30x2" %>
+    </div>
+
+<%= f.submit "投稿する" %>
+<% end %>
+
+<%= link_to "一覧に戻る", posts_path %>

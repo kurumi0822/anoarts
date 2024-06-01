@@ -1,0 +1,38 @@
+<h1>投稿者ページ</h1>
+
+<% if user_signed_in? %>
+  <%= link_to "マイページへ", user_path(current_user.id) %>
+<% end %>
+<%= link_to "新規投稿へ", new_post_path %>
+<%= link_to "作品ページ", posts_path %>
+
+<%= image_tag @user.image_url, size: "250x200" if @user.image? %>
+<p>名前 : <%= @user.name %></p>
+<p>プロフィール : <%= @user.profile %></p>
+
+<h2>ユーザーの投稿一覧</h2>
+<% @user.posts.each do |t| %>
+  <%= link_to post_path(t.id) do %>
+    <div class="post">
+      <%= image_tag t.image_url, width: '20%', height: '20%' if t.image? %>
+    </div>
+  <% end %>
+<% end %>
+
+<h2>ユーザーがいいねした投稿一覧</h2>
+<% @user.liked_posts.each do |t| %>
+  <%= link_to post_path(t.id) do %>
+    <div class="post">
+      <%= image_tag t.image_url, width: '20%', height: '20%' if t.image? %>
+    </div>
+  <% end %>
+<% end %>
+
+
+<% if user_signed_in? %>
+    <% if current_user.id == @user.id %>
+        <%= link_to "編集する", edit_user_registration_path %>
+    <% end %>
+<% end %>
+
+<%= link_to "Tweet一覧に戻る", posts_path %>

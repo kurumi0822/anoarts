@@ -1,0 +1,28 @@
+<%= stylesheet_link_tag 'posts', :media => "all" %>
+<header> 
+  <div class = "buttons">
+    <div class = "logo2">
+        <%= image_tag "name_white.png", width: '100%', height: '100%' %>
+    </div>
+      <% if user_signed_in? %>
+        <%= link_to "マイページへ", user_path(current_user.id), class:"header_button" %>
+      <% end %>
+      <%= link_to "新規投稿へ", new_post_path, class:"header_button" %>
+      <%= link_to "作品ページ", posts_path, class:"header_button", class:"current" %>
+</header>
+
+<body>
+  <div class="posts-container">
+    <% @posts.each do |t| %>
+      <%= link_to post_path(t.id) do %>
+        <div class="post">
+          <%= image_tag t.image_url, width: '100%', height: '100%' if t.image? %>
+        </div>
+      <% end %>
+    <% end %>   
+  </div>
+  <div class="paginations">
+    <%= paginate @posts %>
+  </div>
+  <%= link_to "トップページへ", root_path %>
+</body>

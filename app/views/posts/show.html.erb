@@ -1,0 +1,77 @@
+<%= stylesheet_link_tag 'show', :media => "all" %>
+<header> 
+  <div class = "buttons">
+    <div class = "logo2">
+        <%= image_tag "name_white.png", width: '100%', height: '100%' %>
+    </div>
+      <% if user_signed_in? %>
+        <%= link_to "マイページへ", user_path(current_user.id), class:"header_button" %>
+      <% end %>
+      <%= link_to "新規投稿へ", new_post_path, class:"header_button" %>
+      <%= link_to "作品ページ", posts_path, class:"header_button" %>
+</header>
+
+<div class="post">
+  <%= image_tag @post.image_url, class:"photo_show" if @post.image? %>
+    <p>作品詳細</p>
+    <%= @post.about %>
+      <% if user_signed_in? && current_user.id == @post.user_id %>
+      <%= link_to "編集する", edit_post_path(@post.id) %>
+      <%= button_to "削除する", post_path(@post.id), method: :delete %>
+    <% end %>
+    <div class="comment-wrapper">
+    <p>リアクション一覧</p>
+    <% @reactions.each do |c| %>
+    <div>
+      <%= c.emoji %>
+    </div>
+      <br>
+  <% end %>
+  
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@post, @reaction], local: true) do |f| %>
+    
+    <%= f.select :emoji, 
+    [["☺️", "☺️"], 
+    ["🥺", "🥺"], 
+    ["😎", "😎"]], include_blank: "選択して下さい" %>
+
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> リアクションする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+
+</div>
+
+<div class="comment-wrapper">
+  <p>コメント一覧</p>
+  <% @comments.each do |c| %>
+    <div>
+      <%= c.user.email unless c.user.blank? %>
+      <br>
+      <%= c.content %>
+    </div>
+    <% if user_signed_in? && current_user.id == c.user_id %>
+    <%= button_to "削除する", post_comment_path(c.id), method: :delete %>
+<% end %>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <%= form_with(model: [@post, @comment], local: true) do |f| %>
+      <%= f.text_area :content %>
+      <%= button_tag type: "submit" do %>
+        <i class="far fa-comments"></i> コメントする
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<p><%= image_tag @post.user.image_url, size: "250x200" if @post.user.image? %></p>
+<p><%= @post.user.name %></p>
+<%= link_to '作者のページへ', user_path(@post.user.id) %>
+
+<%= link_to "作品一覧に戻る", posts_path %>
