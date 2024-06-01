@@ -72,3 +72,85 @@ ul li::before{
     border-radius: 50%;
     margin-right: 3px;
 }
+
+.comment-wrapper{
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding: 20px;
+    padding-top: 0;
+    width: 600px;
+    height: auto;
+    background-color: rgb(217, 217, 217);
+    border-radius: 10px;
+}
+
+.comment-content{
+    display: flex;
+    flex-flow: column;
+    margin-bottom: 20px;
+    font-size: 120%;
+}
+
+.comment-name{
+    font-size: 80%;
+}
+
+.comment-form{
+    margin: auto;
+    width: 600px;
+    height: 100px;
+}
+
+.comment-button{
+    width: 150px;
+    height: 30px;
+    background-color: white;
+    border-color: rgb(150, 150, 150);
+    border-width: 1px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.profile{
+    display: flex;
+    align-items: center;
+    margin-left: 300px;
+}
+
+.profile p{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.profile img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.comment-button:hover{
+    background-color: rgb(150, 150, 150);
+    border-color: white;
+    color: white;
+}
+
+.profile_edit{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 150px;
+}
+
+.profile_content{
+    margin-left: 20px;
+}
+
+.to_all_illust{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}

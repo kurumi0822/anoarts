@@ -16,6 +16,7 @@
    <ul>
     <li>作品詳細</li>
     <%= @post.about %>
+
     <div class="comment-wrapper">
     <li>リアクション一覧</li>
     <div class = "emoji">
@@ -28,49 +29,63 @@
     
     <%= f.select :emoji, 
     [["💖", "💖"], 
-    ["🥺", "🥺"], 
-    ["😎", "😎"]], include_blank: "リアクションを選ぶ" %>
-
-      <%= button_tag type: "submit" do %>
-        <i class="far fa-comments">リアクションする</i> 
+    ["⭐️", "⭐️"], 
+    ["☺️", "☺️"],
+    ["😠", "😠"],
+    ["😭", "😭"],
+    ["🥳", "🥳"],
+    ["🥰", "🥰"]], include_blank: "リアクションを選ぶ" %>
+      <%= button_tag type: "submit", class:"comment-button" do %>
+        リアクションする
       <% end %>
     <% end %>
-  <% end %>
-    <% if user_signed_in? && current_user.id == @post.user_id %>
-    <li><%= link_to "編集する", edit_post_path(@post.id) %><br><%= link_to "削除する", post_path(@post.id), method: :delete %></li>
-    
-    
-    </ul>
-    
-  <% end %>
-  
+  <% end %>      
+  </ul>
 
-  
   <div class="comment-wrapper">
-  <p>コメント一覧</p>
-  <% @comments.each do |c| %>
-    <div>
-      <%= c.user.email unless c.user.blank? %>
-      <br>
+    <ul><li>コメント一覧</li></ul>
+    <% @comments.each do |c| %>
+    <div class="comment-content">
+      <div class = "comment-name">
+        <%= c.user.name unless c.user.blank? %>
+      </div>
       <%= c.content %>
-    </div>
-    <% if user_signed_in? && current_user.id == c.user_id %>
-    <%= button_to "削除する", post_comment_path(c.id), method: :delete %>
-<% end %>
-  <% end %>
-
-  <% if user_signed_in? %>
-    <%= form_with(model: [@post, @comment], local: true) do |f| %>
-      <%= f.text_area :content %>
-      <%= button_tag type: "submit" do %>
-        <i class="far fa-comments"></i> コメントする
+    
+      <% if user_signed_in? && current_user.id == c.user_id %>
+        <%= button_to "削除する", post_comment_path(c.id), method: :delete, class:"comment-button" %>
       <% end %>
+    </div>
     <% end %>
-  <% end %>
-</div>
 
+    <% if user_signed_in? %>
+    <%= form_with(model: [@post, @comment], local: true) do |f| %>
+      <%= f.text_area :content, class:"comment-form" %>
+      <br>
+      <%= button_tag type: "submit", class:"comment-button" do %>
+        コメントする
+      <% end %>
+      </div>
+    <% end %>
+    <% end %>
+  </div>
+
+</div> 
+
+
+<div class="profile">
 <p><%= image_tag @post.user.image_url, size: "250x200" if @post.user.image? %></p>
 <p><%= @post.user.name %></p>
 <%= link_to '作者のページへ', user_path(@post.user.id) %>
+</div>
 
+<div class="profile_edit">
+<% if user_signed_in? && current_user.id == @post.user_id %>
+    <%= link_to "投稿を編集する", edit_post_path(@post.id), class:"profile_content" %>
+    <br>
+    <%= link_to "投稿を削除する", post_path(@post.id), method: :delete, class:"profile_content" %>
+<% end %>
+</div>
+
+<div class="to_all_illust">
 <%= link_to "作品一覧に戻る", posts_path %>
+</div>
