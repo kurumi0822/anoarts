@@ -52,6 +52,23 @@ header{
     max-width: 100%;
 }
 
-.comment-wrapper{
-    background-color: aquamarine;
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul li{
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+ul li::before{
+    content: "";
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-color: rgb(150, 150, 150);
+    border-radius: 50%;
+    margin-right: 3px;
 }

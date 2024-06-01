@@ -13,41 +13,40 @@
 
 <div class="post">
   <%= image_tag @post.image_url, class:"photo_show" if @post.image? %>
-    <p>作品詳細</p>
+   <ul>
+    <li>作品詳細</li>
     <%= @post.about %>
-      <% if user_signed_in? && current_user.id == @post.user_id %>
-      <%= link_to "編集する", edit_post_path(@post.id) %>
-      <%= button_to "削除する", post_path(@post.id), method: :delete %>
-    <% end %>
     <div class="comment-wrapper">
-    <p>リアクション一覧</p>
-    <% @reactions.each do |c| %>
-    <div>
-      <%= c.emoji %>
+    <li>リアクション一覧</li>
+    <div class = "emoji">
+      <% @reactions.each do |c| %>   
+          <%= c.emoji %>      
+      <% end %>
     </div>
-      <br>
-  <% end %>
-  
-
-  <% if user_signed_in? %>
+        <% if user_signed_in? %>
     <%= form_with(model: [@post, @reaction], local: true) do |f| %>
     
     <%= f.select :emoji, 
-    [["☺️", "☺️"], 
+    [["💖", "💖"], 
     ["🥺", "🥺"], 
-    ["😎", "😎"]], include_blank: "選択して下さい" %>
+    ["😎", "😎"]], include_blank: "リアクションを選ぶ" %>
 
       <%= button_tag type: "submit" do %>
-        <i class="far fa-comments"></i> リアクションする
+        <i class="far fa-comments">リアクションする</i> 
       <% end %>
     <% end %>
   <% end %>
-</div>
+    <% if user_signed_in? && current_user.id == @post.user_id %>
+    <li><%= link_to "編集する", edit_post_path(@post.id) %><br><%= link_to "削除する", post_path(@post.id), method: :delete %></li>
+    
+    
+    </ul>
+    
+  <% end %>
+  
 
-
-</div>
-
-<div class="comment-wrapper">
+  
+  <div class="comment-wrapper">
   <p>コメント一覧</p>
   <% @comments.each do |c| %>
     <div>
